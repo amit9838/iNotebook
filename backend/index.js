@@ -14,7 +14,8 @@ app.get('/', (req, res) => {
 // Routes
 const auth_url = require('./routes/auth');
 app.use('/api/auth',auth_url);
-// app.use('/api/notes', require('./routes/notes'));
+const notes_url = require('./routes/notes');
+app.use('/api/notes',notes_url);
 
 app.listen(port, ()=> {
     console.log(`Server listning at http://localhost:${port}`);
