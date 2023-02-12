@@ -1,10 +1,13 @@
 const connectToMongo = require('./db');
 const express = require('express')
+var cors = require('cors');
 
 connectToMongo();
 
 const app = express();
 const port = 5000;
+
+app.use(cors());
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', (req, res) => {
