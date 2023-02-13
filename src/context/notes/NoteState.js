@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import NoteContext from "./noteContext";
 
+
 const NoteState = (props) => {
     const host = "http://localhost:5000"
     let initialNotes = []
-
+    const authToken = localStorage.getItem('authToken');
+    
     const [notes, setNotes] = useState(initialNotes)
     // Add a new note
     const fetchNotes = async() => {
@@ -14,7 +16,7 @@ const NoteState = (props) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkMGFkZjZjZTE5YjhmMzg5YmNiM2E2In0sImlhdCI6MTY3NDkwMDI2OH0.Gq7vXz_K7myuUsoZuAS5m4-fXOKOHHt1FsCAUgIBkiA'
+                'auth-token': authToken
             },
             
         });
@@ -32,7 +34,7 @@ const NoteState = (props) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkMGFkZjZjZTE5YjhmMzg5YmNiM2E2In0sImlhdCI6MTY3NDkwMDI2OH0.Gq7vXz_K7myuUsoZuAS5m4-fXOKOHHt1FsCAUgIBkiA'
+                'auth-token': authToken
             },
             body: JSON.stringify({title,description,tag})
         });
@@ -48,7 +50,7 @@ const NoteState = (props) => {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkMGFkZjZjZTE5YjhmMzg5YmNiM2E2In0sImlhdCI6MTY3NDkwMDI2OH0.Gq7vXz_K7myuUsoZuAS5m4-fXOKOHHt1FsCAUgIBkiA'
+                    'auth-token': authToken
                 },
                 body: JSON.stringify({title,description,tag})
             });
@@ -66,7 +68,7 @@ const NoteState = (props) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkMGFkZjZjZTE5YjhmMzg5YmNiM2E2In0sImlhdCI6MTY3NDkwMDI2OH0.Gq7vXz_K7myuUsoZuAS5m4-fXOKOHHt1FsCAUgIBkiA'
+                'auth-token': authToken
             },
         });
         const json = await response.json();

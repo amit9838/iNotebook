@@ -24,10 +24,11 @@ router.post('/register', [
         }
 
         // Check if user already exists with this email.
+        let success = false;
         try {
             let oldUser = await User.findOne({ email: req.body.email });
             if (oldUser) {
-                return res.status(400).json({ error: "Sorry! User with same email already exists." })
+                return res.status(400).json({success, error: "Sorry! User with same email already exists." })
             }
 
             // Genarate hashed password
@@ -47,35 +48,37 @@ router.post('/register', [
                 }
             }
             const authToken = jwt.sign(data, JWT_SECRET, { expiresIn: '1h' });
-            res.json({ authToken });
-
+            success = true;
+            res.json({success, authToken });
+            
         } catch (error) {
             console.log(error.message)
             res.status(500).send('Some error occured.');
         }
     })
-
-
-// Route 2 - Login user
-router.post('/login', [check('email', 'Invalid email!').isEmail(),
-check('password', "Password can't be blank").exists()],
+    
+    
+    // Route 2 - Login user
+    router.post('/login', [check('email', 'Invalid email!').isEmail(),
+    check('password', "Password can't be blank").exists()],
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(500).json({ error: errors.array() });
         }
-
+        
         const { email, password } = req.body;
+        success = false;
         try {
             let user = await User.findOne({ email: email });
             // console.log(user)
             if (!user) {
-                return res.status(400).json({ error: "Invalid credentials" });
+                return res.status(400).json({success, error: "Invalid credentials" });
             }
 
             const passwordCompare = await bcrypt.compare(password, user.password);
             if (!passwordCompare) {
-                return res.status(400).json({ error: "Invalid pass credentials" });
+                return res.status(400).json({success, error: "Invalid pass credentials" });
             }
 
             const data = {
@@ -84,7 +87,8 @@ check('password', "Password can't be blank").exists()],
                 }
             }
             const authToken = jwt.sign(data, JWT_SECRET);
-            res.json({ authToken });
+            success=true;
+            res.json({success, authToken });
 
         } catch (error) {
             console.log(error.message)
