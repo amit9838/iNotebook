@@ -1,10 +1,11 @@
 import React from 'react'
+import { useEffect } from 'react'
 import AddNote from './AddNote'
 import Notes from './Notes'
+import { useNavigate  } from "react-router-dom";
 
 
-export default function Home({showAlert}) {
-
+export default function Home({showAlert}) {    
 
     return (
         <div>

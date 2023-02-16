@@ -89,7 +89,7 @@ const Notes = ({showAlert}) => {
 
 
             <div className="notes-con row mx-auto">
-                {notes.map((note) => {
+                {notes && notes.map && notes.map((note) => {
                     return (
                         <NoteItem note={note} key={note._id} updateNote={updateNote} showAlert = {showAlert} />
                     )

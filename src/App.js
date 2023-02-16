@@ -16,7 +16,7 @@ import Signup from './components/Signup';
 function App() {
 
 
-  const [alert, setAlert] = useState({message:"",type:""});
+  const [alert, setAlert] = useState(null);
 
   const showAlert = (message, type) => {
     setAlert({
@@ -24,25 +24,25 @@ function App() {
       type: type
     })
     setTimeout(() => {
-      setAlert({message:"",type:""});
-    }, 1500);
+      setAlert(null);
+    }, 3500);
   }
 
 
   return (
     <>
-      <NoteState>
         <Router>
+          <NoteState>
           <Navbar showAlert={showAlert}/>
-          <Alert alert = {alert}/>
+          {alert && <Alert alert = {alert}/>}
           <Routes>
             <Route path="/" element={<Home showAlert={showAlert} />}></Route>
             <Route path="/about" element={<About  showAlert={showAlert} />}></Route>
             <Route path="/login" element={<Login  showAlert={showAlert} />}></Route>
             <Route path="/signup" element={<Signup  showAlert={showAlert} />}></Route>
           </Routes>
+        </NoteState>
         </Router>
-      </NoteState>
     </>
   );
 }
